@@ -20,6 +20,10 @@ from graphrag.index.operations.summarize_descriptions import (
 from graphrag.index.typing.context import PipelineRunContext
 from graphrag.index.typing.workflow import WorkflowFunctionOutput
 from graphrag.utils.storage import load_table_from_storage, write_table_to_storage
+from graphrag.index.operations.extract_graph.duplicate_cluster import (
+    cluster_entities,
+    cluster_relationships,
+)
 
 
 async def run_workflow(
@@ -55,6 +59,10 @@ async def run_workflow(
         summarization_num_threads=summarization_llm_settings.concurrent_requests,
     )
 
+    # 对聚合后的实体和关系做嵌入相似度聚类去重
+    entities = await cluster_entities(entities, config)
+    relationships = await cluster_relationships(relationships, config)
+    # 写入去重后的结果
     await write_table_to_storage(entities, "entities", context.output_storage)
     await write_table_to_storage(relationships, "relationships", context.output_storage)
 
