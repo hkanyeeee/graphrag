@@ -1,0 +1,28 @@
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Python bytecode
+*.pyc
+__pycache__/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# IDE / Editor specific
+.vscode/
+.idea/
+
+# Git - although Cursor usually ignores this, being explicit doesn't hurt.
+.git/
+
+# Data files, especially large ones
+docs/data/
+examples_notebooks/inputs/
+
+# Caches
+.pytest_cache/
+.ruff_cache/ 

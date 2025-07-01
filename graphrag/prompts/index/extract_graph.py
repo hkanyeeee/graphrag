@@ -125,5 +125,5 @@ Text: {input_text}
 ######################
 Output:"""
 
-CONTINUE_PROMPT = "MANY entities and relationships were missed in the last extraction. Remember to ONLY emit entities that match any of the previously extracted types. Add them below using the same format:\n"
+CONTINUE_PROMPT = "read the text document again and extract the missed entities and relationships (if any) using the previously extracted types and the same format:\n"
 LOOP_PROMPT = "It appears some entities and relationships may have still been missed. Answer Y if there are still entities or relationships that need to be added, or N if there are none. Please answer with a single letter Y or N.\n"

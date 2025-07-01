@@ -57,5 +57,5 @@ Text: {input_text}
 Output:"""
 
 
-CONTINUE_PROMPT = "MANY entities were missed in the last extraction.  Add them below using the same format:\n"
+CONTINUE_PROMPT = "read the text document again and add the missed entities (if any) using the same format:\n"
 LOOP_PROMPT = "It appears some entities may have still been missed. Answer Y if there are still entities that need to be added, or N if there are none. Please answer with a single letter Y or N.\n"
