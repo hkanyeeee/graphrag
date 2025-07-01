@@ -192,6 +192,10 @@ class GraphExtractor:
             - output - unipartite graph in graphML format
         """
         graph = nx.Graph()
+        # 添加字符串级去重集合
+        seen_entities: set[tuple[str, str, str]] = set()
+        seen_relationships: set[tuple[str, str, str, float]] = set()
+
         for source_doc_id, extracted_data in results.items():
             records = [r.strip() for r in extracted_data.split(record_delimiter)]
 
@@ -204,6 +208,11 @@ class GraphExtractor:
                     entity_name = clean_str(record_attributes[1].upper())
                     entity_type = clean_str(record_attributes[2].upper())
                     entity_description = clean_str(record_attributes[3])
+                    # 字符串去重：跳过完全相同的实体记录
+                    key_entity = (entity_name, entity_type, entity_description)
+                    if key_entity in seen_entities:
+                        continue
+                    seen_entities.add(key_entity)
 
                     if entity_name in graph.nodes():
                         node = graph.nodes[entity_name]
@@ -247,6 +256,11 @@ class GraphExtractor:
                         weight = float(record_attributes[-1])
                     except ValueError:
                         weight = 1.0
+                    # 字符串去重：跳过完全相同的关系记录
+                    key_rel = (source, target, edge_description, weight)
+                    if key_rel in seen_relationships:
+                        continue
+                    seen_relationships.add(key_rel)
 
                     if source not in graph.nodes():
                         graph.add_node(
